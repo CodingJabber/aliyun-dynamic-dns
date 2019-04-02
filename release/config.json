@@ -1,0 +1,8 @@
+{
+  "regionId": "your aliyun region id",
+  "accessKeyId": "your aliyun access key id",
+  "secret": "your aliyun secret",
+  "subDomain": "your sub domain",
+  "interval": 10,
+  "ipSegment": "10."
+}

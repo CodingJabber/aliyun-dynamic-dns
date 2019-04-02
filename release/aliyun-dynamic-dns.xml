@@ -1,0 +1,11 @@
+<service>
+    <id>AliyunDynamicDNS</id>
+    <name>Aliyun Dynamic DNS Service</name>
+    <description>Aliyun Dynamic DNS Service.</description>
+    <env name="JAVA_HOME" value="%JAVA_HOME%"/>
+    <executable>java</executable>
+    <arguments>-jar "D:\Program Files\AliyunDynamicDNS\aliyun-dynamic-dns.jar"</arguments>
+    <startmode>Automatic</startmode>
+    <logpath>%BASE%\logs</logpath>
+    <logmode>rotate</logmode>
+</service>
