@@ -4,7 +4,7 @@
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>logs/aliyun-dynamic-dns.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>aliyun-dynamic-dns.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>logs/aliyun-dynamic-dns.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
