@@ -7,6 +7,7 @@ import com.aliyuncs.alidns.model.v20150109.DescribeSubDomainRecordsResponse;
 import com.aliyuncs.alidns.model.v20150109.UpdateDomainRecordRequest;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
+import com.aliyuncs.utils.StringUtils;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -15,7 +16,9 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 /**
  * Main Class
@@ -53,9 +56,9 @@ public class AliyunDynamicDNS {
         logger.info("Task terminated.");
     }
 
-    private static void exec(String subDomain, String ipSegment) throws ClientException, UnknownHostException {
-        String ip = InetAddress.getLocalHost().getHostAddress();
-        if (ipSegment != null && !ipSegment.equals(ip.substring(0, ipSegment.length()))) {
+    private static void exec(String subDomain, String ipSegment) throws ClientException, SocketException {
+        String ip = getIpAddress(ipSegment);
+        if (ip == null) {
             return;
         }
         DescribeSubDomainRecordsResponse.Record record = getDomainRecord(subDomain);
@@ -87,6 +90,24 @@ public class AliyunDynamicDNS {
     private static Config getConfig() throws IOException {
         String json = FileUtils.readFileToString(new File("config.json"), "UTF-8");
         return new Gson().fromJson(json, Config.class);
+    }
+
+    private static String getIpAddress(String ipSegment) throws SocketException {
+        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+        while (interfaces.hasMoreElements()) {
+            NetworkInterface ni = interfaces.nextElement();
+            Enumeration<InetAddress> address = ni.getInetAddresses();
+            while (address.hasMoreElements()) {
+                InetAddress nextElement = address.nextElement();
+                String hostAddress = nextElement.getHostAddress();
+                if (StringUtils.isEmpty(ipSegment)) {
+                    return hostAddress;
+                } else if (ipSegment.equals(hostAddress.substring(0, ipSegment.length()))) {
+                    return hostAddress;
+                }
+            }
+        }
+        return null;
     }
 
 }
