@@ -4,5 +4,7 @@
   "secret": "your aliyun secret",
   "subDomain": "your sub domain",
   "interval": 10,
-  "ipSegment": "10."
+  "ipSource": 2,
+  "ipSegment": "10.",
+  "httpUrl": "https://hd.xiaohucat.tech/yourip"
 }

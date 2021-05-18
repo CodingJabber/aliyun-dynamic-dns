@@ -9,7 +9,13 @@ public class Config {
     private String secret;
     private String subDomain;
     private Integer interval;
+    /**
+     * 1: Network interface
+     * 2: Http response
+     */
+    private Integer ipSource;
     private String ipSegment;
+    private String httpUrl;
 
     public String getRegionId() {
         return regionId;
@@ -51,11 +57,27 @@ public class Config {
         this.interval = interval;
     }
 
+    public Integer getIpSource() {
+        return ipSource;
+    }
+
+    public void setIpSource(Integer ipSource) {
+        this.ipSource = ipSource;
+    }
+
     public String getIpSegment() {
         return ipSegment;
     }
 
     public void setIpSegment(String ipSegment) {
         this.ipSegment = ipSegment;
+    }
+
+    public String getHttpUrl() {
+        return httpUrl;
+    }
+
+    public void setHttpUrl(String httpUrl) {
+        this.httpUrl = httpUrl;
     }
 }
