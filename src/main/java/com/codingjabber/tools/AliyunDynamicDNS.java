@@ -58,7 +58,7 @@ public class AliyunDynamicDNS {
             } catch (Exception e) {
                 log.error("Task execution failed: {}", e.getMessage(), e);
             }
-        }, 0, 1, TimeUnit.MINUTES);
+        }, 0, config.getInterval(), TimeUnit.MINUTES);
     }
 
     private static void exec(Config config) throws ClientException, IOException {
