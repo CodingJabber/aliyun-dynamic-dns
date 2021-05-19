@@ -1,5 +1,7 @@
 package com.codingjabber.tools;
 
+import java.util.List;
+
 /**
  * Configuration Class
  */
@@ -15,7 +17,7 @@ public class Config {
      */
     private Integer ipSource;
     private String ipSegment;
-    private String httpUrl;
+    private List<String> httpUrls;
 
     public String getRegionId() {
         return regionId;
@@ -73,11 +75,11 @@ public class Config {
         this.ipSegment = ipSegment;
     }
 
-    public String getHttpUrl() {
-        return httpUrl;
+    public List<String> getHttpUrls() {
+        return httpUrls;
     }
 
-    public void setHttpUrl(String httpUrl) {
-        this.httpUrl = httpUrl;
+    public void setHttpUrls(List<String> httpUrls) {
+        this.httpUrls = httpUrls;
     }
 }

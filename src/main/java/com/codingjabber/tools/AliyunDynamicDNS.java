@@ -40,7 +40,7 @@ public class AliyunDynamicDNS {
     private static CloseableHttpClient httpClient = HttpClientBuilder.create().build();
     private static Pattern ipPattern = Pattern.compile("\\d+\\.\\d+.\\d+\\.\\d+");
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         Config config;
         try {
             config = getConfig();
@@ -101,7 +101,16 @@ public class AliyunDynamicDNS {
         if(config.getIpSource() == 1) {
             return getNetworkInterfaceIp(config.getIpSegment());
         }
-        return getHttpResponseIp(config.getHttpUrl());
+        if(config.getHttpUrls() == null) {
+            return null;
+        }
+        for(String url : config.getHttpUrls()) {
+            String ip = getHttpResponseIp(url);
+            if(ip != null) {
+                return ip;
+            }
+        }
+        return null;
     }
 
     private static String getNetworkInterfaceIp(String ipSegment) throws SocketException {
