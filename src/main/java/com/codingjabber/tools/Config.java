@@ -18,6 +18,7 @@ public class Config {
     private Integer ipSource;
     private String ipSegment;
     private List<String> httpUrls;
+    private String proxy;
 
     public String getRegionId() {
         return regionId;
@@ -81,5 +82,13 @@ public class Config {
 
     public void setHttpUrls(List<String> httpUrls) {
         this.httpUrls = httpUrls;
+    }
+
+    public String getProxy() {
+        return proxy;
+    }
+
+    public void setProxy(String proxy) {
+        this.proxy = proxy;
     }
 }

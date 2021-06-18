@@ -10,6 +10,7 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.utils.StringUtils;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -37,7 +38,7 @@ public class AliyunDynamicDNS {
     private static Logger log = LoggerFactory.getLogger(AliyunDynamicDNS.class);
     private static ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private static IAcsClient client;
-    private static CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+    private static CloseableHttpClient httpClient;
     private static Pattern ipPattern = Pattern.compile("\\d+\\.\\d+.\\d+\\.\\d+");
 
     public static void main(String[] args) {
@@ -48,6 +49,11 @@ public class AliyunDynamicDNS {
             log.error("Read config error: {}", e.getMessage(), e);
             return;
         }
+        HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+        if(!StringUtils.isEmpty(config.getProxy())) {
+            httpClientBuilder.setProxy(HttpHost.create(config.getProxy()));
+        }
+        httpClient = httpClientBuilder.build();
         client = new DefaultAcsClient(DefaultProfile.getProfile(config.getRegionId(), config.getAccessKeyId(), config.getSecret()));
         log.info("Task start...");
         executor.scheduleWithFixedDelay(() -> {
