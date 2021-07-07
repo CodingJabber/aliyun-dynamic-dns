@@ -139,6 +139,8 @@ public class AliyunDynamicDNS {
 
     private static String getHttpResponseIp(String httpUrl) throws IOException {
         HttpGet httpGet = new HttpGet(httpUrl);
+        httpGet.removeHeaders("User-Agent");
+        httpGet.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36");
         CloseableHttpResponse response = httpClient.execute(httpGet);
         String result = EntityUtils.toString(response.getEntity());
         Matcher matcher = ipPattern.matcher(result);
